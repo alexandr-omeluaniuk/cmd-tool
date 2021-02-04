@@ -23,7 +23,6 @@
  */
 package ss.cmd.tool.api;
 
-import java.util.Map;
 import java.util.Set;
 import ss.cmd.tool.model.CommandArgument;
 
@@ -47,7 +46,7 @@ public interface CommandProvider {
      * @param args command arguments.
      * @throws Exception error.
      */
-    void execute(Map<String, String> args) throws Exception;
+    void execute(Set<CommandArgument> args) throws Exception;
     /**
      * Arguments separator.
      * @return arguments separator string.
@@ -61,5 +60,15 @@ public interface CommandProvider {
      */
     default String valueSeparator() {
         return "=";
+    }
+    /**
+     * Get argument by it position.
+     * @param position argument position.
+     * @return argument or null.
+     */
+    default CommandArgument getArgument(final Integer position) {
+        return this.arguments().stream().filter((a) -> {
+            return position.equals(a.getPosition());
+        }).findFirst().get();
     }
 }

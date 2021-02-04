@@ -27,12 +27,14 @@ package ss.cmd.tool.model;
  * Command argument.
  * @author alex
  */
-public class CommandArgument {
+public class CommandArgument implements Comparable<CommandArgument> {
     /** Name. */
-    private final String name;
-    /** Is required. */
+    private String name;
+    /** Argument position. Starts with 0. */
+    private Integer position;
+    /** Validation: Is required. */
     private boolean required;
-    /** Is value is required. */
+    /** Validation: Is value is required. */
     private boolean valueRequired;
     /** Value. */
     private String value;
@@ -42,6 +44,15 @@ public class CommandArgument {
      */
     public CommandArgument(String name) {
         this.name = name;
+        this.required = false;
+        this.valueRequired = true;
+    }
+    /**
+     * Constructor.
+     * @param position argument position. 
+     */
+    public CommandArgument(Integer position) {
+        this.position = position;
         this.required = false;
         this.valueRequired = true;
     }
@@ -89,5 +100,22 @@ public class CommandArgument {
     public CommandArgument setValue(String value) {
         this.value = value;
         return this;
+    }
+    /**
+     * @return the position
+     */
+    public Integer getPosition() {
+        return position;
+    }
+    /**
+     * @param position the position to set
+     */
+    public CommandArgument setPosition(Integer position) {
+        this.position = position;
+        return this;
+    }
+    @Override
+    public int compareTo(CommandArgument o) {
+        return this.getName().compareTo(o.getName());
     }
 }

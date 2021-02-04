@@ -24,8 +24,8 @@
 package ss.cmd.tool.command;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import ss.cmd.tool.api.CommandProvider;
 import ss.cmd.tool.model.CommandArgument;
 
@@ -34,7 +34,10 @@ import ss.cmd.tool.model.CommandArgument;
  * @author alex
  */
 public class Help implements CommandProvider {
-
+    /** Logger. */
+    private final static System.Logger LOG = System.getLogger(Help.class.getName());
+    /** Position command. */
+    private static final int POS_COMMAND = 0;
     @Override
     public Set<String> commandAliases() {
         Set<String> aliases = new HashSet<>();
@@ -43,14 +46,17 @@ public class Help implements CommandProvider {
         aliases.add("--h");
         return aliases;
     }
-
     @Override
     public Set<CommandArgument> arguments() {
-        return new HashSet<>();
+        Set<CommandArgument> args = new TreeSet<>();
+        args.add(new CommandArgument(POS_COMMAND));
+        return args;
     }
-
     @Override
-    public void execute(Map<String, String> args) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void execute(Set<CommandArgument> args) throws Exception {
+        CommandArgument command = getArgument(POS_COMMAND);
+        if (command != null) {
+            LOG.log(System.Logger.Level.DEBUG, "help for command [" + command.getValue() + "]");
+        }
     }
 }
