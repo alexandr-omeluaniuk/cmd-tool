@@ -24,23 +24,43 @@
 package ss.cmd.tool.core.model;
 
 /**
- * Command argument.
+ * Command argument from certain position.
  * @author alex
  */
-public abstract class CommandArgument {
-    /** Validation: Is required. */
-    private boolean required;
+public class PositionCommandArgument extends CommandArgument {
+    /** Position. */
+    private Integer position;
+    /** Argument value. */
+    private String value;
     /**
-     * @return the required
+     * Constructor.
+     * @param position argument position. 
      */
-    public boolean isRequired() {
-        return required;
+    public PositionCommandArgument(Integer position) {
+        this.position = position;
     }
     /**
-     * @param required the required to set
+     * @return the position
      */
-    public CommandArgument setRequired(boolean required) {
-        this.required = required;
-        return this;
+    public Integer getPosition() {
+        return position;
+    }
+    /**
+     * @param position the position to set
+     */
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+    /**
+     * @return the value
+     */
+    public String getValue() {
+        return value;
+    }
+    /**
+     * @param value the value to set
+     */
+    public void setValue(String value) {
+        this.value = value;
     }
 }

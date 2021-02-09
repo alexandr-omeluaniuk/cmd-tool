@@ -25,8 +25,10 @@ package ss.cmd.tool.core;
 
 import java.lang.System.Logger;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import ss.cmd.tool.core.api.CommandProvider;
+import ss.cmd.tool.core.model.CommandArgument;
 import ss.cmd.tool.core.util.ServiceLocator;
 
 /**
@@ -39,33 +41,32 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            printHelp();
-        } else {
-            
-        }
+    public static void main(String[] args) throws Exception {
+        CommandProvider commandProvider = getCommandProvider(args);
+        commandProvider.execute(parseArguments(commandProvider, args));
     }
     
-    private static void parseCommandLineArguments(String[] args) {
+    private static CommandProvider getCommandProvider(String[] args) {
         String commandName = args[0];
         LOG.log(Logger.Level.DEBUG, "Command name [" + commandName + "]");
-        List<CommandProvider> commandProviders = ServiceLocator.services(CommandProvider.class).stream()
-                .filter((cp) -> {
+        List<CommandProvider> allCommands = ServiceLocator.services(CommandProvider.class);
+        List<CommandProvider> commandProviders = allCommands.stream().filter((cp) -> {
             return cp.commandAliases().contains(commandName);
         }).collect(Collectors.toList());
         if (commandProviders.isEmpty()) {
-            LOG.log(Logger.Level.ERROR, "Command not found: " + commandName);
+            return allCommands.stream().filter((cp) -> {
+                return cp.commandAliases().contains("help");
+            }).findFirst().get();
         } else {
-            
+            return commandProviders.iterator().next();
         }
     }
     
-    private static void printHelp() {
-        List<CommandProvider> commandProviders = ServiceLocator.services(CommandProvider.class);
-        commandProviders.stream().anyMatch((cp) -> {
-            return cp.commandAliases().contains("help");
+    private static Set<CommandArgument> parseArguments(CommandProvider commandProvider, String[] args) {
+        Set<CommandArgument> commandArguments = commandProvider.arguments();
+        commandArguments.stream().forEach(a -> {
+            
         });
-        
+        return commandArguments;
     }
 }

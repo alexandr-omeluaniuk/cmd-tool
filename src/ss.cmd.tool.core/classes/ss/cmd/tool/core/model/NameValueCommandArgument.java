@@ -24,23 +24,9 @@
 package ss.cmd.tool.core.model;
 
 /**
- * Command argument.
+ * Name and value command argument.
  * @author alex
  */
-public abstract class CommandArgument {
-    /** Validation: Is required. */
-    private boolean required;
-    /**
-     * @return the required
-     */
-    public boolean isRequired() {
-        return required;
-    }
-    /**
-     * @param required the required to set
-     */
-    public CommandArgument setRequired(boolean required) {
-        this.required = required;
-        return this;
-    }
+public class NameValueCommandArgument extends CommandArgument {
+    
 }

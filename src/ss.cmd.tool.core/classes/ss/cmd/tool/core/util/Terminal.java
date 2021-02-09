@@ -21,26 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ss.cmd.tool.core.model;
+package ss.cmd.tool.core.util;
 
 /**
- * Command argument.
+ * Terminal.
  * @author alex
  */
-public abstract class CommandArgument {
-    /** Validation: Is required. */
-    private boolean required;
+public class Terminal {
     /**
-     * @return the required
+     * Terminal output.
+     * @param msg message.
      */
-    public boolean isRequired() {
-        return required;
-    }
-    /**
-     * @param required the required to set
-     */
-    public CommandArgument setRequired(boolean required) {
-        this.required = required;
-        return this;
+    public static synchronized void output(Object msg) {
+        System.out.print(msg);
     }
 }

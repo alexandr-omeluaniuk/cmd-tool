@@ -25,6 +25,7 @@ package ss.cmd.tool.core.api;
 
 import java.util.Set;
 import ss.cmd.tool.core.model.CommandArgument;
+import ss.cmd.tool.core.model.PositionCommandArgument;
 
 /**
  * Terminal command provider.
@@ -66,9 +67,11 @@ public interface CommandProvider {
      * @param position argument position.
      * @return argument or null.
      */
-    default CommandArgument getArgument(final Integer position) {
-        return this.arguments().stream().filter((a) -> {
-            return position.equals(a.getPosition());
+    default PositionCommandArgument getPositionArgument(final Integer position) {
+        return (PositionCommandArgument) this.arguments().stream().filter(a -> {
+            return a instanceof PositionCommandArgument;
+        }).filter(a -> {
+            return position.equals(((PositionCommandArgument) a).getPosition());
         }).findFirst().get();
     }
 }
