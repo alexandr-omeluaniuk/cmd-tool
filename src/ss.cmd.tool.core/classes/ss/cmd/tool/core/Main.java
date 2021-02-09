@@ -28,9 +28,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import ss.cmd.tool.core.api.CommandProvider;
+import ss.cmd.tool.core.exception.ArgumentValidationException;
 import ss.cmd.tool.core.model.CommandArgument;
 import ss.cmd.tool.core.model.PositionCommandArgument;
 import ss.cmd.tool.core.util.ServiceLocator;
+import ss.cmd.tool.core.util.Terminal;
 
 /**
  * Application entry point.
@@ -44,17 +46,19 @@ public class Main {
      */
     public static void main(String[] args) throws Exception {
         CommandProvider commandProvider = getCommandProvider(args);
-        commandProvider.execute(parseArguments(commandProvider, args));
+        Set<CommandArgument> commandArguments = parseArguments(commandProvider, args);
+        commandProvider.execute(commandArguments);
     }
     
     private static CommandProvider getCommandProvider(String[] args) {
-        String commandName = args[0];
+        String commandName = args.length > 0 ? args[0] : "help";
         LOG.log(Logger.Level.DEBUG, "Command name [" + commandName + "]");
         List<CommandProvider> allCommands = ServiceLocator.services(CommandProvider.class);
         List<CommandProvider> commandProviders = allCommands.stream().filter((cp) -> {
             return cp.commandAliases().contains(commandName);
         }).collect(Collectors.toList());
         if (commandProviders.isEmpty()) {
+            Terminal.output("Command [" + commandName + "] not found. Please check your command syntax...");
             return allCommands.stream().filter((cp) -> {
                 return cp.commandAliases().contains("help");
             }).findFirst().get();
@@ -63,13 +67,20 @@ public class Main {
         }
     }
     
-    private static Set<CommandArgument> parseArguments(CommandProvider commandProvider, String[] args) {
+    private static Set<CommandArgument> parseArguments(CommandProvider commandProvider, String[] args)
+            throws ArgumentValidationException {
         Set<CommandArgument> commandArguments = commandProvider.arguments();
         commandArguments.stream().forEach(a -> {
             if (a instanceof PositionCommandArgument) {
-                
+                PositionCommandArgument positionArgument = (PositionCommandArgument) a;
+                if (positionArgument.getPosition() < args.length) {
+                    positionArgument.setValue(args[1 + positionArgument.getPosition()]);
+                }
             }
         });
+        for (CommandArgument commandArgument : commandArguments) {
+            commandArgument.validation();
+        }
         return commandArguments;
     }
 }

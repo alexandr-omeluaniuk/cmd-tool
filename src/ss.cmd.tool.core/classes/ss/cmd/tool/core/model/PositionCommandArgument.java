@@ -29,7 +29,7 @@ import ss.cmd.tool.core.exception.ArgumentValidationException;
  * Command argument from certain position.
  * @author alex
  */
-public class PositionCommandArgument extends CommandArgument {
+public class PositionCommandArgument extends CommandArgument implements Comparable<PositionCommandArgument> {
     /** Position. */
     private Integer position;
     /** Argument value. */
@@ -71,5 +71,9 @@ public class PositionCommandArgument extends CommandArgument {
         if (isRequired() && getValue() == null) {
             throw new ArgumentValidationException(this, "argument in position [" + getPosition() + "] is required");
         }
+    }
+    @Override
+    public int compareTo(PositionCommandArgument o) {
+        return this.getPosition() > o.getPosition() ? -1 : 1;
     }
 }
