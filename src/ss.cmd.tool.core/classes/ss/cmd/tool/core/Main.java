@@ -26,8 +26,8 @@ package ss.cmd.tool.core;
 import java.lang.System.Logger;
 import java.util.List;
 import java.util.stream.Collectors;
-import ss.cmd.tool.api.CommandProvider;
-import ss.cmd.tool.util.ServiceLocator;
+import ss.cmd.tool.core.api.CommandProvider;
+import ss.cmd.tool.core.util.ServiceLocator;
 
 /**
  * Application entry point.

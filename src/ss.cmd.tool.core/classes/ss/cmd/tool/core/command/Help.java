@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ss.cmd.tool.command;
+package ss.cmd.tool.core.command;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-import ss.cmd.tool.api.CommandProvider;
-import ss.cmd.tool.model.CommandArgument;
+import ss.cmd.tool.core.api.CommandProvider;
+import ss.cmd.tool.core.model.CommandArgument;
 
 /**
  * Help command.

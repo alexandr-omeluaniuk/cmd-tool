@@ -24,10 +24,10 @@
 
 module ss.cmd.tool.core {
     // Exports
-    exports ss.cmd.tool.api;
+    exports ss.cmd.tool.core.api;
     // Uses
-    uses ss.cmd.tool.api.CommandProvider;
+    uses ss.cmd.tool.core.api.CommandProvider;
     // Providers
     provides java.lang.System.LoggerFinder with ss.cmd.tool.core.logging.ConsoleLoggerFinder;
-    provides ss.cmd.tool.api.CommandProvider with ss.cmd.tool.command.Help;
+    provides ss.cmd.tool.core.api.CommandProvider with ss.cmd.tool.core.command.Help;
 }

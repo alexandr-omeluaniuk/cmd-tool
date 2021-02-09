@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ss.cmd.tool.util;
+package ss.cmd.tool.core.util;
 
 import java.util.Iterator;
 import java.util.LinkedList;
