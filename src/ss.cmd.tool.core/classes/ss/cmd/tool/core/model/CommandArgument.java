@@ -23,13 +23,15 @@
  */
 package ss.cmd.tool.core.model;
 
+import ss.cmd.tool.core.exception.ArgumentValidationException;
+
 /**
  * Command argument.
  * @author alex
  */
 public abstract class CommandArgument {
     /** Validation: Is required. */
-    private boolean required;
+    private boolean required = false;
     /**
      * @return the required
      */
@@ -43,4 +45,8 @@ public abstract class CommandArgument {
         this.required = required;
         return this;
     }
+    /**
+     * Argument validation.
+     */
+    public abstract void validation() throws ArgumentValidationException;
 }

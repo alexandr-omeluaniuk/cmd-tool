@@ -21,12 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ss.cmd.tool.core.model;
+package ss.cmd.tool.core.exception;
+
+import ss.cmd.tool.core.model.CommandArgument;
 
 /**
- * Name and value command argument.
+ * Argument validation exception.
  * @author alex
  */
-public class NameValueCommandArgument {
-    
+public class ArgumentValidationException extends Exception {
+    /** Command argument. */
+    private final CommandArgument commandArgument;
+    /**
+     * Constructor.
+     * @param argument command line argument.
+     * @param message validation error message.
+     */
+    public ArgumentValidationException(CommandArgument argument, String message) {
+        super(message);
+        this.commandArgument = argument;
+    }
 }

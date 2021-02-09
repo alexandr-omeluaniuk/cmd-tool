@@ -23,6 +23,8 @@
  */
 package ss.cmd.tool.core.model;
 
+import ss.cmd.tool.core.exception.ArgumentValidationException;
+
 /**
  * Command argument from certain position.
  * @author alex
@@ -62,5 +64,12 @@ public class PositionCommandArgument extends CommandArgument {
      */
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public void validation() throws ArgumentValidationException {
+        if (isRequired() && getValue() == null) {
+            throw new ArgumentValidationException(this, "argument in position [" + getPosition() + "] is required");
+        }
     }
 }

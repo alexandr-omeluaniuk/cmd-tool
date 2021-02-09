@@ -29,6 +29,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import ss.cmd.tool.core.api.CommandProvider;
 import ss.cmd.tool.core.model.CommandArgument;
+import ss.cmd.tool.core.model.PositionCommandArgument;
 import ss.cmd.tool.core.util.ServiceLocator;
 
 /**
@@ -65,7 +66,9 @@ public class Main {
     private static Set<CommandArgument> parseArguments(CommandProvider commandProvider, String[] args) {
         Set<CommandArgument> commandArguments = commandProvider.arguments();
         commandArguments.stream().forEach(a -> {
-            
+            if (a instanceof PositionCommandArgument) {
+                
+            }
         });
         return commandArguments;
     }
