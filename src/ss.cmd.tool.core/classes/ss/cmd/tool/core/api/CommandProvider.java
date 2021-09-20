@@ -65,10 +65,11 @@ public interface CommandProvider {
     /**
      * Get argument by it position.
      * @param position argument position.
+     * @param args command arguments.
      * @return argument or null.
      */
-    default PositionCommandArgument getPositionArgument(final Integer position) {
-        return (PositionCommandArgument) this.arguments().stream().filter(a -> {
+    default PositionCommandArgument getPositionArgument(final Integer position, Set<CommandArgument> args) {
+        return (PositionCommandArgument) args.stream().filter(a -> {
             return a instanceof PositionCommandArgument;
         }).filter(a -> {
             return position.equals(((PositionCommandArgument) a).getPosition());

@@ -29,6 +29,7 @@ import java.util.TreeSet;
 import ss.cmd.tool.core.api.CommandProvider;
 import ss.cmd.tool.core.model.CommandArgument;
 import ss.cmd.tool.core.model.PositionCommandArgument;
+import ss.cmd.tool.core.util.Terminal;
 
 /**
  * Help command.
@@ -55,9 +56,31 @@ public class Help implements CommandProvider {
     }
     @Override
     public void execute(Set<CommandArgument> args) throws Exception {
-        PositionCommandArgument command = getPositionArgument(POS_COMMAND);
-        if (command != null) {
+        PositionCommandArgument command = getPositionArgument(POS_COMMAND, args);
+        if (command != null && command.getValue() != null) {
             LOG.log(System.Logger.Level.DEBUG, "help for command [" + command.getValue() + "]");
+            Terminal.output(outputCommandHelp(command.getValue()));
+        } else {
+            Terminal.output(outputFullHelp());
         }
     }
+    /**
+     * Output help for a command.
+     * @param commandName a command name.
+     * @return help text for a command.
+     */
+    private String outputCommandHelp(String commandName) {
+        StringBuilder sb = new StringBuilder();
+        
+        return sb.toString();
+    }
+    /**
+     * Output full help text.
+     * @return help text for all commands.
+     */
+    private String outputFullHelp() {
+        StringBuilder sb = new StringBuilder();
+        
+        return sb.toString();
+    };
 }

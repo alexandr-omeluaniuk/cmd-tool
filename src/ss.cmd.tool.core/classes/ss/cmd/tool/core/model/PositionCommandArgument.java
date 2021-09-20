@@ -76,4 +76,11 @@ public class PositionCommandArgument extends CommandArgument implements Comparab
     public int compareTo(PositionCommandArgument o) {
         return this.getPosition() > o.getPosition() ? -1 : 1;
     }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("PositionCommandArgument [").append(getPosition()).append("] [").append(getValue()).append("]");
+        return sb.toString();
+    }
 }

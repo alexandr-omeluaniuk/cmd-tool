@@ -24,6 +24,7 @@
 package ss.cmd.tool.core;
 
 import java.lang.System.Logger;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,7 +50,11 @@ public class Main {
         Set<CommandArgument> commandArguments = parseArguments(commandProvider, args);
         commandProvider.execute(commandArguments);
     }
-    
+    /**
+     * Get command provider.
+     * @param args command line arguments.
+     * @return command provider.
+     */
     private static CommandProvider getCommandProvider(String[] args) {
         String commandName = args.length > 0 ? args[0] : "help";
         LOG.log(Logger.Level.DEBUG, "Command name [" + commandName + "]");
@@ -69,14 +74,17 @@ public class Main {
     
     private static Set<CommandArgument> parseArguments(CommandProvider commandProvider, String[] args)
             throws ArgumentValidationException {
+        String[] commandArgumentsSource = args.length > 0 ? Arrays.copyOfRange(args, 1, args.length) : new String[0];
         Set<CommandArgument> commandArguments = commandProvider.arguments();
         commandArguments.stream().forEach(a -> {
             if (a instanceof PositionCommandArgument) {
                 PositionCommandArgument positionArgument = (PositionCommandArgument) a;
-                if (positionArgument.getPosition() < args.length) {
-                    positionArgument.setValue(args[1 + positionArgument.getPosition()]);
+                if (positionArgument.getPosition() < commandArgumentsSource.length) {
+                    String val = commandArgumentsSource[positionArgument.getPosition()];
+                    positionArgument.setValue(val);
                 }
             }
+            LOG.log(Logger.Level.DEBUG, "argument: " + a);
         });
         for (CommandArgument commandArgument : commandArguments) {
             commandArgument.validation();
