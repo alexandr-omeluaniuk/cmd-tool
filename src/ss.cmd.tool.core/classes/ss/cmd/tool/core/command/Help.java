@@ -29,6 +29,7 @@ import java.util.TreeSet;
 import ss.cmd.tool.core.api.CommandProvider;
 import ss.cmd.tool.core.model.CommandArgument;
 import ss.cmd.tool.core.model.PositionCommandArgument;
+import ss.cmd.tool.core.util.ServiceLocator;
 import ss.cmd.tool.core.util.Terminal;
 
 /**
@@ -47,6 +48,10 @@ public class Help implements CommandProvider {
         aliases.add("-help");
         aliases.add("--h");
         return aliases;
+    }
+    @Override
+    public String commandDescription() {
+        return "displays help for all commands or for an individual command";
     }
     @Override
     public Set<CommandArgument> arguments() {
@@ -80,7 +85,12 @@ public class Help implements CommandProvider {
      */
     private String outputFullHelp() {
         StringBuilder sb = new StringBuilder();
-        
+        ServiceLocator.services(CommandProvider.class).forEach(provider -> {
+            sb.append(String.join(",", provider.commandAliases()));
+            sb.append("   ");
+            sb.append(provider.commandDescription());
+            sb.append("\n");
+        });
         return sb.toString();
     };
 }

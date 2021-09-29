@@ -38,6 +38,11 @@ public interface CommandProvider {
      */
     Set<String> commandAliases();
     /**
+     * Get command description for Help output.
+     * @return command description.
+     */
+    String commandDescription();
+    /**
      * Command arguments list.
      * @return command arguments.
      */
